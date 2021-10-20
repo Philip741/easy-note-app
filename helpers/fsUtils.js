@@ -1,6 +1,10 @@
 const fs = require('fs');
 const util = require('util');
+const Fs = require('fs-extra');
 
+async function touch (file) {  
+    await Fs.ensureFile(file)
+}
 // Promise version of fs.readFile
 const readFromFile = util.promisify(fs.readFile);
 /**
@@ -25,10 +29,11 @@ const readAndAppend = (content, file) => {
       console.error(err);
     } else {
       const parsedData = JSON.parse(data);
+      console.log(parsedData)
       parsedData.push(content);
       writeToFile(file, parsedData);
     }
   });
 };
 
-module.exports = { readFromFile, writeToFile, readAndAppend };
+module.exports = { readFromFile, writeToFile, readAndAppend, touch };
