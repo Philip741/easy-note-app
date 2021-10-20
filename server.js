@@ -21,10 +21,9 @@ app.get('/notes', (req, res) =>
 
 app.use('/api', api);
 
-//app.get('*', (req, res) =>
- // res.sendFile(path.join(__dirname, '/public/index.html'))
-//)
-console.log(api)
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+);
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
 );
