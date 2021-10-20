@@ -22,7 +22,11 @@
    ## Instructions
    Clone the repository  
    ## Usage
-   After launching the application  
+   After launching the application add the first note and click on the save 
+   icon to save the note. It will show up on the left sidebar.
+
+   ### Video of application running
+   [Application video](https://drive.google.com/file/d/1wv3V2_ReiCGXOR3Yx7irSR-XE9SVnCam/view?usp=sharing)
    ## Contribution
    Contribution can be done by forking the repository and placing a pull request.
    ## Testing instructions
