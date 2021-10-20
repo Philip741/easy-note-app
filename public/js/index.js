@@ -52,7 +52,8 @@ const deleteNote = (id) =>
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
-
+  console.log(activeNote);
+  //missing activeNote.id
   if (activeNote.id) {
     noteTitle.setAttribute('readonly', true);
     noteText.setAttribute('readonly', true);
@@ -67,13 +68,18 @@ const renderActiveNote = () => {
 };
 
 const handleNoteSave = () => {
+    console.log("Save and reload");
+    window.location.reload();
   const newNote = {
+    id: crypto.randomUUID(),
     title: noteTitle.value,
     text: noteText.value,
   };
+  //this will run after window reload to prevent multiple saving 
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
+    //window.location.reload();
   });
 };
 
@@ -99,11 +105,13 @@ const handleNoteDelete = (e) => {
 const handleNoteView = (e) => {
   e.preventDefault();
   activeNote = JSON.parse(e.target.parentElement.getAttribute('data-note'));
+  //console.log(activeNote);
   renderActiveNote();
 };
 
 // Sets the activeNote to and empty object and allows the user to enter a new note
 const handleNewNoteView = (e) => {
+  //console.log(activeNote);
   activeNote = {};
   renderActiveNote();
 };
@@ -119,6 +127,7 @@ const handleRenderSaveBtn = () => {
 // Render the list of note titles
 const renderNoteList = async (notes) => {
   let jsonNotes = await notes.json();
+  //console.log(jsonNotes);
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
@@ -155,12 +164,14 @@ const renderNoteList = async (notes) => {
   };
 
   if (jsonNotes.length === 0) {
+    console.log("Note length zero line 160")
     noteListItems.push(createLi('No saved Notes', false));
   }
-
+  
   jsonNotes.forEach((note) => {
     const li = createLi(note.title);
     li.dataset.note = JSON.stringify(note);
+    console.log(li);
 
     noteListItems.push(li);
   });
@@ -171,7 +182,10 @@ const renderNoteList = async (notes) => {
 };
 
 // Gets notes from the db and renders them to the sidebar
-const getAndRenderNotes = () => getNotes().then(renderNoteList);
+const getAndRenderNotes = () => {
+    getNotes().then(renderNoteList);
+    console.log("running reload!");
+};
 
 if (window.location.pathname === '/notes') {
   saveNoteBtn.addEventListener('click', handleNoteSave);
