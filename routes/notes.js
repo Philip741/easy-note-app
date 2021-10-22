@@ -16,6 +16,19 @@ notes.get('/', (req, res) => {
   }
 });
 
+notes.delete('/:id', (req, res) => {
+    const data = JSON.parse(fs.readFileSync(fileDb));
+    //console.log(data);
+    console.log(req.params.id);
+    data.find((item, index) => {
+        if (item.id === req.params.id) {
+            data.splice(index, 1);
+            writeToFile(fileDb, data);
+        }
+    })
+    res.json(true);
+})
+
 notes.post('/', (req, res) => {
     if (fs.existsSync(fileDb)) {
         console.log("file exists")
